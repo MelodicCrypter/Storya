@@ -192,4 +192,6 @@ fabric.properties
 
 # APP
 +++playground/
+# APP => for JetBrains just in case
+.idea/
 

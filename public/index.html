@@ -12,18 +12,6 @@
 
     <!-- Scripts -->
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io();
-
-        // Event Listener => connect
-        socket.on('connect', () => {
-            console.log('Connected to server');
-        });
-
-        // Event Listener => disconnect
-        socket.on('disconnect', () => {
-            console.log('Disconnected from the server');
-        });
-    </script>
+    <script src="/js/index.js"></script>
 </body>
 </html>

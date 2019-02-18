@@ -18,16 +18,28 @@ const port = process.env.PORT || 3000;
 const publicPath = path.join(__dirname, '../public');
 app.use(express.static(publicPath));
 
-// SOCKET.IO Event listeners
+// SOCKET.IO Event
 io.on('connection', (socket) => {
-    console.log('New user connected');
+    // Event Listener => connection
+    console.log('On Server => The user has connected to the server');
 
+    // Custom Event Emitter => newMessage
+    socket.emit('newMessage', {
+        from: 'hugh@melodiccrypter.com',
+        text: 'how are things on your end?',
+        createdAt: 777
+    });
+
+    // Custom Event Listener => createMessage
+    socket.on('createMessage', (msg) => {
+        console.log('client wrote this message: ', msg);
+    });
+
+    // Event Listener => disconnect
     socket.on('disconnect', () => {
-        console.log('User disconnected');
+        console.log('On Server => The user disconnected from server');
     });
 });
-// io.on('disconnection')
-
 
 // App ready to run
 server.listen(port, () => {

@@ -31,9 +31,8 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
     // Custom Event Listener => createMessage
+    // when the user creates a message an emit inside this listener will be triggered
     socket.on('createMessage', (msg) => {
-        console.log('client wrote this message: ', msg);
-
         // Custom Event Emitter => newMessage
         io.emit('newMessage', generateMessage(msg.from, msg.text));
     });

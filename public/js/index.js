@@ -3,6 +3,7 @@
 
 // Instance of io inside server.js
 const socket = io();
+const $ = jQuery;
 
 // Event Listener => connect
 socket.on('connect', () => {
@@ -11,10 +12,24 @@ socket.on('connect', () => {
 
 // Custom Event Listener => newMessage
 socket.on('newMessage', (msg) => {
-    console.log('You have a new message', msg);
+    const li = $('<li></li>');
+    li.text(`${msg.from}: ${msg.text}`);
+
+    $('#messages').append(li);
 });
 
 // Event Listener => disconnect
 socket.on('disconnect', () => {
     console.log('On Client => you disconnected from the server');
+});
+
+$('#message-form').on('submit', (e) => {
+    e.preventDefault();
+
+    socket.emit('createMessage', {
+        from: 'user',
+        text: $('[name=message]').val()
+    }, () => {
+        // this is the acknowledgment callback
+    });
 });

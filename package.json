@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "node server/server.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "mocha server/**/*.test.js",
+    "test-watch": "nodemon --exec 'yarn test'"
   },
   "engines": {
     "node": "10.15.1"
@@ -17,6 +19,8 @@
   "devDependencies": {
     "eslint": "^5.14.0",
     "eslint-config-airbnb": "^17.1.0",
+    "expect": "^24.1.0",
+    "mocha": "^6.0.0",
     "nodemon": "^1.18.10"
   }
 }

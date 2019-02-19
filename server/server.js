@@ -5,6 +5,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 // Local Modules
+const { generateMessage } = require('./utils/message');
 
 // Express, http, and socketIO
 const app = express();
@@ -24,29 +25,17 @@ io.on('connection', (socket) => {
     console.log('On Server => The user has connected to the server');
 
     // Welcome message to the user
-    socket.emit('newMessage', {
-        from: 'Admin',
-        text: 'Welcome to Storya app',
-        createdAt: new Date().getTime()
-    });
+    socket.emit('newMessage', generateMessage('Admin', 'Welcome to Storya app'));
 
     // Broadcast a message to everyone
-    socket.broadcast.emit('newMessage', {
-        from: 'Admin',
-        text: 'New user joined',
-        createdAt: new Date().getTime()
-    });
+    socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
     // Custom Event Listener => createMessage
     socket.on('createMessage', (msg) => {
         console.log('client wrote this message: ', msg);
 
         // Custom Event Emitter => newMessage
-        io.emit('newMessage', {
-            from: msg.from,
-            text: msg.text,
-            createdAt: new Date().getTime()
-        });
+        io.emit('newMessage', generateMessage(msg.from, msg.text));
     });
 
     // Event Listener => disconnect

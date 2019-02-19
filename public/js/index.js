@@ -7,7 +7,7 @@ const $ = jQuery;
 
 // Event Listener => connect
 socket.on('connect', () => {
-    console.log('On Client => you are connected to the server');
+    console.log('You are connected to the server');
 });
 
 // Custom Event Listener => newMessage
@@ -20,16 +20,18 @@ socket.on('newMessage', (msg) => {
 
 // Event Listener => disconnect
 socket.on('disconnect', () => {
-    console.log('On Client => you disconnected from the server');
+    console.log('You disconnected from the server');
 });
 
 $('#message-form').on('submit', (e) => {
     e.preventDefault();
 
     socket.emit('createMessage', {
-        from: 'user',
+        from: $('[name=nickname]').val(),
         text: $('[name=message]').val()
     }, () => {
         // this is the acknowledgment callback
     });
+
+    $('[name=message]').val('');
 });

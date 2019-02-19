@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "node server/server.js",
     "lint": "eslint"
   },
   "engines": {

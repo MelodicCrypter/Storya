@@ -7,14 +7,6 @@ const socket = io();
 // Event Listener => connect
 socket.on('connect', () => {
     console.log('On Client => you are connected to the server');
-
-    // Do all Emits here so that it is surely connected
-    // Custom Event Emitter => createMessage
-    socket.emit('createMessage', {
-        to: 'jean@sample.com',
-        text: 'How is Xander doing bilabs?',
-        subject: 'Sent from MAC laptop'
-    });
 });
 
 // Custom Event Listener => newMessage

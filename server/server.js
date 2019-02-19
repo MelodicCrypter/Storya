@@ -23,16 +23,16 @@ io.on('connection', (socket) => {
     // Event Listener => connection
     console.log('On Server => The user has connected to the server');
 
-    // Custom Event Emitter => newMessage
-    socket.emit('newMessage', {
-        from: 'hugh@melodiccrypter.com',
-        text: 'how are things on your end?',
-        createdAt: 777
-    });
-
     // Custom Event Listener => createMessage
     socket.on('createMessage', (msg) => {
         console.log('client wrote this message: ', msg);
+
+        // Custom Event Emitter => newMessage
+        io.emit('newMessage', {
+            from: msg.from,
+            text: msg.text,
+            createdAt: new Date().getTime()
+        });
     });
 
     // Event Listener => disconnect

@@ -23,6 +23,20 @@ io.on('connection', (socket) => {
     // Event Listener => connection
     console.log('On Server => The user has connected to the server');
 
+    // Welcome message to the user
+    socket.emit('newMessage', {
+        from: 'Admin',
+        text: 'Welcome to Storya app',
+        createdAt: new Date().getTime()
+    });
+
+    // Broadcast a message to everyone
+    socket.broadcast.emit('newMessage', {
+        from: 'Admin',
+        text: 'New user joined',
+        createdAt: new Date().getTime()
+    });
+
     // Custom Event Listener => createMessage
     socket.on('createMessage', (msg) => {
         console.log('client wrote this message: ', msg);

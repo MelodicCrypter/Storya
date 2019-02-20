@@ -5,7 +5,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 // Local Modules
-const { generateMessage } = require('./utils/message');
+const { generateMessage, generateLocationMessage } = require('./utils/message');
 
 // Express, http, and socketIO
 const app = express();
@@ -31,10 +31,17 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
     // Custom Event Listener => createMessage
-    // when the user creates a message an emit inside this listener will be triggered
+    // when the user sends a new message
     socket.on('createMessage', (msg) => {
-        // Custom Event Emitter => newMessage
+        // Custom Event Emitter => newMessage, broadcast the new message
         io.emit('newMessage', generateMessage(msg.from, msg.text));
+    });
+
+    // Custom Event Listener => createLocationMessage
+    // when the user send his/her coordinates
+    socket.on('createLocationMessage', (coords) => {
+        // Custom Event Emitter => newMessage, broadcast the location message
+        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
     });
 
     // Event Listener => disconnect

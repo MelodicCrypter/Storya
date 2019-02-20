@@ -32,9 +32,11 @@ io.on('connection', (socket) => {
 
     // Custom Event Listener => createMessage
     // when the user sends a new message
-    socket.on('createMessage', (msg) => {
+    socket.on('createMessage', (msg, callback) => {
         // Custom Event Emitter => newMessage, broadcast the new message
         io.emit('newMessage', generateMessage(msg.from, msg.text));
+        // Callback
+        callback();
     });
 
     // Custom Event Listener => createLocationMessage

@@ -8,17 +8,24 @@
     <title>Storya</title>
     <link rel="stylesheet" href="/css/app.css">
 </head>
-<body>
-    <h1>Storya App</h1>
+<body class="chat">
 
-    <ol id="messages"></ol>
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="users"></div>
+    </div>
 
-    <form action="" id="message-form">
-        <input type="text" name="nickname" placeholder="Nickname" /><br>
-        <input type="text" name="message" placeholder="Type message here" /><br>
-        <button>Send</button>
-    </form>
-    <button id="sendLocation">Send Location</button>
+    <div class="chat__main">
+        <ol id="messages" class="chat__messages"></ol>
+
+        <div class="chat__footer">
+            <form id="message-form">
+                <input type="text" name="message" placeholder="Type message here" autofocus autocomplete="off"/>
+                <button>Send</button>
+            </form>
+            <button id="send-location">Send Location</button>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="/socket.io/socket.io.js"></script>

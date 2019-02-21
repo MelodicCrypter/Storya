@@ -1,5 +1,5 @@
 // This is the client side
-// uses regular function cause some browsers might not work yet with ES6
+// as much as possible, use regular function cause some browsers might not work yet with ES6
 
 // Instance of io inside server.js
 const socket = io();
@@ -13,9 +13,11 @@ socket.on('connect', () => {
 
 // Custom Event Listener => newMessage
 socket.on('newMessage', (msg) => {
+    // create a formatted time
+    const formatedTime = moment(msg.createdAt).format('h:mm a');
     // create an li element
     const li = $('<li></li>');
-    li.text(`${msg.from}: ${msg.text}`);
+    li.text(`${msg.from} ${formatedTime}: ${msg.text}`);
 
     // append to the ol list inside the DOM
     $('#messages').append(li);

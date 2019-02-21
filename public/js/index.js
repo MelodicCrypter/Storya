@@ -5,6 +5,24 @@
 const socket = io();
 const $ = jQuery;
 
+// Functions
+function scrollToBottom() {
+    // messages box
+    const msgBox = $('#messages');
+    // selector for the very last message or latest one
+    const newMessage = msgBox.children('li:last-child');
+    // Heights
+    const clientHeight = msgBox.prop('clientHeight');
+    const scrollTop = msgBox.prop('scrollTop');
+    const scrollHeight = msgBox.prop('scrollHeight');
+    const newMessageHeight = newMessage.innerHeight();
+    const prevMessageHeight = newMessage.prev().innerHeight(); // height of the previous message
+    // setting
+    if (clientHeight + scrollTop + newMessageHeight + prevMessageHeight >= scrollHeight) {
+        msgBox.scrollTop(scrollHeight);
+    }
+}
+
 // SOCKET.IO STUFFS ***********************************
 // Event Listener => connect
 socket.on('connect', () => {
@@ -26,6 +44,9 @@ socket.on('newMessage', (msg) => {
 
     // append to the ol list
     $('#messages').append(html);
+
+    // show new messages always
+    scrollToBottom();
 });
 
 // Custom Event Listener => newLocationMessage

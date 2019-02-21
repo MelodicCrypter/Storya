@@ -61,8 +61,14 @@ io.on('connection', (socket) => {
     // Custom Event Listener => createMessage
     // when the user sends a new message
     socket.on('createMessage', (msg, callback) => {
-        // Custom Event Emitter => newMessage, broadcast the new message
-        io.emit('newMessage', generateMessage(msg.from, msg.text));
+        // get the details of the specific user first
+        const user = users.getUser(socket.id);
+
+        // if user is present and the message (msg.text) is a string and not empty
+        if (user && isRealString(msg.text)) {
+            // Custom Event Emitter => newMessage, emit the message to the specific room
+            io.to(user.room).emit('newMessage', generateMessage(user.name, msg.text));
+        }
 
         // Callback
         callback();
@@ -71,8 +77,14 @@ io.on('connection', (socket) => {
     // Custom Event Listener => createLocationMessage
     // when the user send his/her coordinates
     socket.on('createLocationMessage', (coords) => {
-        // Custom Event Emitter => newMessage, broadcast the location message
-        io.emit('newLocationMessage', generateLocationMessage(coords.from, coords.latitude, coords.longitude));
+        // get the details of the specific user first
+        const user = users.getUser(socket.id);
+
+        // if user is present
+        if (user) {
+            // Custom Event Emitter => newLocationMessage, emit the message to the specific room
+            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
+        }
     });
 
     // Event Listener => disconnect

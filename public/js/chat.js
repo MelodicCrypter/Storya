@@ -101,15 +101,17 @@ socket.on('updateUserList', (users) => {
 // DOM EVENTS ******************************************
 // When submit button on message-form Form is submitted
 $('#message-form').on('submit', (e) => {
+    // prevent the button from submitting
     e.preventDefault();
 
+    // the message input element
     const msgTextbox = $('[name=message]');
 
     socket.emit('createMessage', {
-        from: 'testUser',
         text: msgTextbox.val()
     }, () => {
         // this is the acknowledgment callback
+        // upon successfully sending message clear the text box
         msgTextbox.val('');
     });
 });
@@ -129,7 +131,6 @@ locationBtn.on('click', () => {
         locationBtn.removeAttr('disabled').text('Send Location');
 
         socket.emit('createLocationMessage', {
-            from: 'AdminTest',
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
         });

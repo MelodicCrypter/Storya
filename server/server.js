@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
     // when the user send his/her coordinates
     socket.on('createLocationMessage', (coords) => {
         // Custom Event Emitter => newMessage, broadcast the location message
-        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
+        io.emit('newLocationMessage', generateLocationMessage(coords.from, coords.latitude, coords.longitude));
     });
 
     // Event Listener => disconnect

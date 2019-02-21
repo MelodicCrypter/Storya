@@ -15,26 +15,35 @@ socket.on('connect', () => {
 socket.on('newMessage', (msg) => {
     // create a formatted time
     const formatedTime = moment(msg.createdAt).format('h:mm a');
-    // create an li element
-    const li = $('<li></li>');
-    li.text(`${msg.from} ${formatedTime}: ${msg.text}`);
 
-    // append to the ol list inside the DOM
-    $('#messages').append(li);
+    // setting up mustache template
+    const template = $('#message-template').html();
+    const html = Mustache.render(template, {
+        from: msg.from,
+        text: msg.text,
+        createdAt: formatedTime
+    });
+
+    // append to the ol list
+    $('#messages').append(html);
 });
 
 // Custom Event Listener => newLocationMessage
 // This will be the user's location
 socket.on('newLocationMessage', (msg) => {
-    // create li tag
-    const li = $('<li></li>');
-    // create anchor tag
-    const a = $('<a target="_blank">My Current Location</a>');
+    // create a formatted time
+    const formatedTime = moment(msg.createdAt).format('h:mm a');
 
-    li.text(`${msg.from}: `);
-    a.attr('href', msg.url);
-    li.append(a);
-    $('#messages').append(li);
+    // setting up mustache template
+    const template = $('#location-message-template').html();
+    const html = Mustache.render(template, {
+        from: msg.from,
+        url: msg.url,
+        createdAt: formatedTime
+    });
+
+    // append to the ol list
+    $('#messages').append(html);
 });
 
 // Event Listener => disconnect
@@ -73,6 +82,7 @@ locationBtn.on('click', () => {
         locationBtn.removeAttr('disabled').text('Send Location');
 
         socket.emit('createLocationMessage', {
+            from: 'AdminTest',
             latitude: position.coords.latitude,
             longitude: position.coords.longitude
         });

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Storya</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+
+<body class="chat">
+
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="users"></div>
+    </div>
+
+    <div class="chat__main">
+        <ol id="messages" class="chat__messages"></ol>
+
+        <div class="chat__footer">
+            <form id="message-form">
+                <input type="text" name="message" placeholder="Type message here" autofocus autocomplete="off"/>
+                <button>Send</button>
+            </form>
+            <button id="send-location">Send Location</button>
+        </div>
+    </div>
+
+    <!--Mustache template for the new messages-->
+    <script id="message-template" type="text/template">
+        <li class="message">
+            <div class="message__title">
+                <h4>{{from}}</h4>
+                <span>{{createdAt}}</span>
+            </div>
+            <div class="message__body">
+                <p>{{{text}}}</p>
+            </div>
+        </li>
+    </script>
+
+    <!--Mustache template for the location messages-->
+    <script id="location-message-template" type="text/template">
+        <li class="message">
+            <div class="message__title">
+                <h4>{{from}}</h4>
+                <span>{{createdAt}}</span>
+            </div>
+            <div class="message__body">
+                <p>
+                    <a href="{{url}}" target="_blank">My Current Location.</a>
+                </p>
+            </div>
+        </li>
+    </script>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/lib/jquery-3.3.1.min.js"></script>
+    <script src="/js/lib/moment.js"></script>
+    <script src="/js/lib/mustache.js"></script>
+    <script src="/js/lib/deparam.js"></script>
+    <script src="/js/chat.js"></script>
+</body>
+
+</html>

@@ -2,9 +2,10 @@
     "env": {
         "commonjs": true,
         "es6": true,
-        "mocha": true
+        "mocha": true,
+        "node": true
     },
-    "extends": "airbnb",
+    "extends": ["eslint:recommended", "airbnb"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"

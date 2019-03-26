@@ -103,7 +103,7 @@ io.on('connection', (socket) => {
 }); // END OF SOCKET.IO
 
 
-// App ready to run
+// App is ready to run on port...
 server.listen(port, () => {
     console.log(`Server up on port: ${port}`);
 });

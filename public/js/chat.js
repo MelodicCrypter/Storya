@@ -35,7 +35,7 @@ socket.on('connect', () => {
             // redirect to index
             window.location.href = '/?err=t';
         } else {
-
+            // just proceed
         }
     });
 });

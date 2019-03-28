@@ -29,7 +29,8 @@ io.on('connection', (socket) => {
     // Event Listener => connection
     console.log('On Server => New user connected');
 
-    // Listener for Join
+    // Custom Event Listener => join
+    // when someone joins
     socket.on('join', (params, callback) => {
         // => halt process if params are not strings or empty
         if (!isRealString(params.name) || !isRealString(params.room)) {

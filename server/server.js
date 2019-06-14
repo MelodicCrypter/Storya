@@ -37,26 +37,32 @@ io.on('connection', (socket) => {
             return callback('Name and room are required');
         }
 
-        // => Set the specific room the user joined
-        socket.join(params.room);
+        // => if user has a unique name inside specific room, then proceed
+        if (!users.checkUserDuplicate(params.name, params.room)) {
+            // => Remove user first in previous rooms
+            users.removeUser(socket.id);
 
-        // => Remove user first in previous rooms
-        users.removeUser(socket.id);
+            // => Set the specific room the user joined
+            socket.join(params.room);
 
-        // => Add the user the room he/she just joined
-        users.addUser(socket.id, params.name, params.room);
+            // => Add the user the room he/she just joined
+            users.addUser(socket.id, params.name, params.room);
 
-        // => Emit the updated user list to the room
-        io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+            // => Emit the updated user list to the room
+            io.to(params.room).emit('updateUserList', users.getUserList(params.room));
 
-        // => Welcome message to the user inside specific room
-        socket.emit('newMessage', generateMessage('Storya', `Welcome to <b class="vital">${params.room}</b> outpost.`));
+            // => Welcome message to the user inside specific room
+            socket.emit('newMessage', generateMessage('Storya', `Welcome to <b class="vital">${params.room}</b> chamber.`));
 
-        // => Broadcast a message to everyone inside the specific room
-        socket.broadcast.to(params.room).emit('newMessage', generateMessage('Storya', `${params.name} has joined.`));
+            // => Broadcast a message to everyone inside the specific room
+            socket.broadcast.to(params.room).emit('newMessage', generateMessage('Storya', `${params.name} has joined.`));
 
-        // => return callback to chat.js letting know that everything is fine
-        callback();
+            // => return callback to chat.js letting know that everything is fine
+            return callback();
+        }
+
+        // else show name-duplication error
+        callback('error');
     });
 
     // Custom Event Listener => createMessage

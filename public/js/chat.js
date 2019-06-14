@@ -4,6 +4,9 @@
 const socket = io();
 const $ = jQuery;
 
+// Hide chat.html elements first
+$('.chat').hide();
+
 // Functions => scrollToBottom()
 function scrollToBottom() {
     // The messages' box
@@ -32,10 +35,11 @@ socket.on('connect', () => {
     socket.emit('join', params, (err) => {
         // after checking the params at the server
         if (err) {
-            // redirect to index
-            window.location.href = '/?err=t';
+            // redirect to index with error, name duplicate
+            window.location.href = '/?err=dup';
         } else {
-            // just proceed
+            // Show chat.html
+            $('.chat').fadeIn();
         }
     });
 });
@@ -87,7 +91,7 @@ socket.on('newLocationMessage', (msg) => {
 // This will be the list of active users in a specific room
 socket.on('updateUserList', (users) => {
     // Create an Ordered List element
-    const ol = $('<ol></ol>');
+    const ol = $('<ul></ul>');
 
     // Append to ol each user as a list, ex: <ol><li>James</li></ol>
     users.forEach((user) => {
@@ -140,3 +144,7 @@ locationBtn.on('click', () => {
         alert('Unable to fetch location.');
     });
 });
+
+window.onbeforeunload = function() {
+    return '...';
+};

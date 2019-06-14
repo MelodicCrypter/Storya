@@ -16,11 +16,12 @@
                 <h3>Storya</h3>
             </div>
             <div class="form-field">
-                <label for="">Display Name</label>
+                <label for="">Unique Name</label>
                 <input type="text" name="name" autofocus required>
+                <span id="nameDupErr"></span>
             </div>
             <div class="form-field">
-                <label for="">Room Name</label>
+                <label for="">Chamber Name</label>
                 <input type="text" name="room" required>
             </div>
             <div class="form-field">
@@ -28,6 +29,14 @@
             </div>
         </form>
     </div>
-</body>
 
+    <!-- Script -->
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const err = urlParams.get('err');
+        const errElement = document.getElementById('nameDupErr');
+        err.toString().trim() === 'dup' ? errElement.innerText = 'Name already taken in Chamber.' : errElement.innerText = '';
+    </script>
+
+</body>
 </html>

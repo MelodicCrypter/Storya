@@ -1,8 +1,9 @@
 {
-  "name": "chat-app",
+  "name": "storya",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server/server.js",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "start": "node server/server.js",
     "lint": "eslint",
